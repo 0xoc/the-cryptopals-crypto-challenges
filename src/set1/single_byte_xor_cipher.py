@@ -2,6 +2,24 @@ from src.utils import repeating_xor, score
 
 
 def decode(hex_string: str):
+    _d = _decode(hex_string)
+
+    if not _d:
+        return ""
+
+    return _d[0]
+
+
+def get_key(hex_string: str):
+    _d = _decode(hex_string)
+
+    if not _d:
+        return ""
+
+    return _decode(hex_string)[1]
+
+
+def _decode(hex_string: str):
     """Find the single-byte XOR key for a given hex string."""
 
     # Convert hex string to bytes
@@ -18,6 +36,9 @@ def decode(hex_string: str):
 
     # Return the plaintext with the highest score
     try:
-        return plaintexts[scores.index(max(scores))].decode("utf-8")
+        _index = scores.index(max(scores))
+        _key = keys[_index]
+        _plaintext = plaintexts[_index]
+        return _plaintext.decode("utf-8"), _key
     except UnicodeDecodeError:
         return ""

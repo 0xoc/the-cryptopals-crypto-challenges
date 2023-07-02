@@ -1,6 +1,8 @@
+from src.set1.break_repeating_xor import RepeatingXorBreaker
 from src.set1.detect_single_byte_xor_cipher import detect
 from src.set1.repeating_key_xor import encrypt
 from src.set1.single_byte_xor_cipher import decode
+import base64
 
 
 def test_single_byte_xor_cipher():
@@ -33,3 +35,15 @@ def test_encrypt():
     )
 
     assert encrypt(plaintext, key) == ciphertext
+
+
+def test_break_reaping_xor():
+    # open file 6.txt
+    ct = open("tests/fixtures/6.txt").read().replace("\n", "")
+
+    ct = base64.b64decode(ct)
+
+    breaker = RepeatingXorBreaker(ct)
+    pt = breaker.break_xor()
+
+    print(pt)

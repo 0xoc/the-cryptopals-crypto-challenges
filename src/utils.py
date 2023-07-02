@@ -30,6 +30,9 @@ def repeating_xor(bytes_string: bytes, key: bytes):
 
 
 def score(bytes_string: bytes):
+    # return the number of spaces in the string
+    spaces = bytes_string.count(b" ")
+
     """Score a bytes string based on character frequency."""
 
     # Create a list of all characters in the bytes string
@@ -46,4 +49,4 @@ def score(bytes_string: bytes):
     ]
 
     # Return the score
-    return len(characters) - len(non_english_alphabet)
+    return (len(characters) - len(non_english_alphabet)) + spaces
