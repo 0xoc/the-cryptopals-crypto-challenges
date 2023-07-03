@@ -46,11 +46,8 @@ def decrypt(cipher_text: bytes, key: bytes, iv: bytes = b"fake 0th ciphertext bl
         decrypted = bytes([a ^ b for a, b in zip(decrypted, previous_block)])
 
         plain_text += decrypted
-        print(decrypted)
 
     # remove padding
     plain_text = remove_pad(plain_text)
-
-    print(plain_text)
 
     return plain_text
