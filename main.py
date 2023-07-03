@@ -1,15 +1,15 @@
 from src.set1.break_repeating_xor import RepeatingXorBreaker
 import base64
-
+from src.set1.detect_ecb import ECBDetector
+from src.set1.aes_ecb import AECECBBreak
 
 if __name__ == "__main__":
-    # open file 6.txt
-    ct = open("tests/fixtures/6.txt").read().replace("\n", "")
+    with open("tests/fixtures/8.txt", "r") as f:
+        data = f.read()
 
-    ct = base64.b64decode(ct)
+    ciphertexts = [base64.b64decode(ct) for ct in data.split("\n")]
 
-    breaker = RepeatingXorBreaker(ct)
-    pt = breaker.break_xor()
-
-    print("final result:")
-    print(pt)
+    for ciphertext in ciphertexts:
+        if ECBDetector(ciphertext).is_ecb():
+            print(ciphertext)
+            print(AECECBBreak(ciphertext).decrypt(b"YELLOW SUBMARINE"))
